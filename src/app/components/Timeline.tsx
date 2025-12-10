@@ -166,6 +166,7 @@ export default function Timeline() {
                         data-aos={textAnimation}
                         data-aos-offset="300"
                         data-aos-easing="ease-in-sine"
+                        data-aos-delay="500"
                       >
                         {child.type === "milestone" &&
                           child.text.map((item: string, i: number) => (
@@ -190,6 +191,7 @@ export default function Timeline() {
                     data-aos={textAnimation}
                     data-aos-offset="300"
                     data-aos-easing="ease-in-sine"
+                    data-aos-delay="200"
                   >
                     {child.type === "milestone" &&
                       child.text.map((item: string, i: number) => (
@@ -269,6 +271,7 @@ export default function Timeline() {
                       data-aos={textAnimation}
                       data-aos-offset="300"
                       data-aos-easing="ease-in-sine"
+                      data-aos-delay="200"
                     >
                       <ul className="space-y-2 text-custom-black text-sm md:text-base">
                         {child.text.map((item: string, i: number) => (
