@@ -59,11 +59,25 @@ export default function Timeline() {
         {/* Timeline line */}
         <div className="absolute left-8 md:left-1/2 top-0 bottom-11 w-1.5 bg-custom-black transform md:-translate-x-1/2"></div>
 
-        {timelineData.nodes.map((node, index) => {
-          const isLeft = index % 2 === 0;
-          const child = node.children[0] as TimelineChild;
-          const isFirstNode = index === 0;
-          const isMilestone = child.type === "milestone";
+        {(() => {
+          let lastSideForImages = true; // true = left, false = right
+          
+          return timelineData.nodes.map((node, index) => {
+            const child = node.children[0] as TimelineChild;
+            const hasImage = child.type === "program" && child.img;
+            
+            // Determine side based on whether item has an image
+            let isLeft: boolean;
+            if (hasImage) {
+              isLeft = lastSideForImages;
+              lastSideForImages = !lastSideForImages; // Toggle for next image
+            } else {
+              // Milestone: use the same side as the last item
+              isLeft = !lastSideForImages; // Use opposite of what will be next (i.e., current side)
+            }
+            
+            const isFirstNode = index === 0;
+            const isMilestone = child.type === "milestone";
 
           return (
             <div key={index} className="mb-16 relative">
@@ -216,7 +230,8 @@ export default function Timeline() {
               )}
             </div>
           );
-        })}
+          });
+        })()}
 
         {/* 3 black square dots at the end */}
         <div className="absolute bottom-0 left-8 md:left-1/2 transform md:-translate-x-1/2 flex flex-col gap-2 mt-4">
