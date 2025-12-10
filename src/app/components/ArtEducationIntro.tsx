@@ -1,6 +1,15 @@
+import { useEffect } from "react";
 import artEducationData from "../sample_data/art_eductaion.json";
+import AOS from "aos";
 
 export default function ArtEducationIntro() {
+
+      useEffect(() => {
+        AOS.init({
+          duration: 1000,
+          once: true,
+        });
+      }, []);
   return (
     <section className="w-full relative -mt-32 mb-16 px-4 md:px-8 lg:px-16 z-10">
       <div className="max-w-[1000px] mx-auto relative">
@@ -17,7 +26,12 @@ export default function ArtEducationIntro() {
         </svg>
 
         {/* Content */}
-        <div className="relative pl-16 pr-16 md:px-26 lg:px-32 py-6 md:py-8 lg:py-10">
+        <div
+          className="relative pl-16 pr-16 md:px-26 lg:px-32 py-6 md:py-8 lg:py-10"
+          data-aos="fade-zoom-in"
+          data-aos-easing="ease-in"
+          data-aos-offset="0"
+        >
           <h2 className="text-xl md:text-3xl lg:text-4xl font-medium mb-6 text-white">
             甚麼是
             <span className="relative inline-block">
