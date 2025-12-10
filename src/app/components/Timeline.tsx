@@ -1,10 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import timelineData from "../sample_data/timeline.json";
 import { useCloudAnimation } from "../hooks/useCloudAnimation";
+import AOS from "aos";
 
 type ProgramChild = {
   type: "program";
@@ -24,6 +25,13 @@ type TimelineChild = ProgramChild | MilestoneChild;
 export default function Timeline() {
   const sectionRef = useRef<HTMLElement>(null);
   const { cloud1X, cloud2X, cloud3X, cloud4X } = useCloudAnimation(sectionRef);
+
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      once: true,
+    });
+  }, []);
 
   return (
     <section ref={sectionRef} className="w-full pb-16 px-8 md:px-16 lg:px-32 relative overflow-hidden flex flex-col justify-center items-center">
@@ -94,6 +102,11 @@ export default function Timeline() {
             
             const isFirstNode = index === 0;
             const isMilestone = child.type === "milestone";
+            
+            // AOS animation directions - image and text should animate from opposite directions
+            const imageAnimation = isLeft ? "fade-right" : "fade-left";
+            const textAnimation = isLeft ? "fade-left" : "fade-right";
+            const labelAnimation = isLeft ? "fade-right" : "fade-left";
 
           return (
             <div key={index} className="mb-16 relative">
@@ -104,11 +117,16 @@ export default function Timeline() {
                   <div
                     className={`md:w-1/2 flex ${
                       isLeft
-                        ? "md:justify-end md:pr-8 md:order-1"
-                        : "md:justify-start md:pl-8 md:order-2"
+                        ? "md:justify-end md:pr-15 md:order-1"
+                        : "md:justify-start md:pl-15 md:order-2"
                     } ${!isLeft && !isMilestone ? "md:ml-auto" : ""}`}
                   >
-                    <div className="text-custom-black font-bold text-lg md:text-xl ml-16 md:ml-0">
+                    <div 
+                      className="text-custom-black font-bold text-lg md:text-xl ml-16 md:ml-0"
+                      data-aos={labelAnimation}
+                      data-aos-offset="300"
+                      data-aos-easing="ease-in-sine"
+                    >
                       {node.label}
                     </div>
                   </div>
@@ -139,11 +157,16 @@ export default function Timeline() {
                     <div
                       className={`hidden md:flex md:w-1/2 ${
                         isLeft
-                          ? "md:justify-start md:pl-8 md:order-2"
-                          : "md:justify-end md:pr-8 md:order-1"
+                          ? "md:justify-start md:pl-15 md:order-2"
+                          : "md:justify-end md:pr-15 md:order-1"
                       }`}
                     >
-                      <div className="bg-custom-black text-white rounded-lg px-4 py-3 shadow-lg inline-block">
+                      <div 
+                        className="bg-custom-black text-white rounded-lg px-4 py-3 shadow-lg inline-block"
+                        data-aos={textAnimation}
+                        data-aos-offset="300"
+                        data-aos-easing="ease-in-sine"
+                      >
                         {child.type === "milestone" &&
                           child.text.map((item: string, i: number) => (
                             <p
@@ -162,7 +185,12 @@ export default function Timeline() {
               {/* Milestone content below label on mobile */}
               {isMilestone && (
                 <div className="md:hidden ml-16">
-                  <div className="bg-custom-black text-white rounded-lg px-4 py-3 shadow-lg inline-block">
+                  <div 
+                    className="bg-custom-black text-white rounded-lg px-4 py-3 shadow-lg inline-block"
+                    data-aos={textAnimation}
+                    data-aos-offset="300"
+                    data-aos-easing="ease-in-sine"
+                  >
                     {child.type === "milestone" &&
                       child.text.map((item: string, i: number) => (
                         <p
@@ -185,7 +213,12 @@ export default function Timeline() {
                 >
                   {/* Image Side */}
                   {child.img && (
-                    <div className="md:w-1/2 md:max-w-90 ml-16 md:ml-0">
+                    <div 
+                      className="md:w-1/2 md:max-w-90 ml-16 md:ml-0"
+                      data-aos={imageAnimation}
+                      data-aos-offset="300"
+                      data-aos-easing="ease-in-sine"
+                    >
                       <div className="relative rounded-lg shadow-lg overflow-hidden">
                         <Image
                           src={`/${child.img}`}
@@ -231,7 +264,12 @@ export default function Timeline() {
 
                   {/* Text Side */}
                   {child.text ? (
-                    <div className="md:w-1/2 ml-16 md:ml-0 flex items-center">
+                    <div 
+                      className="md:w-1/2 ml-16 md:ml-0 flex items-center"
+                      data-aos={textAnimation}
+                      data-aos-offset="300"
+                      data-aos-easing="ease-in-sine"
+                    >
                       <ul className="space-y-2 text-custom-black text-sm md:text-base">
                         {child.text.map((item: string, i: number) => (
                           <li key={i} className="flex items-start">

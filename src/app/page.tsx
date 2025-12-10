@@ -39,7 +39,7 @@ export default function Home() {
 
       {/* Floating action button with Lottie animation */}
       <button 
-        className="fixed bottom-8 right-8 w-18 aspect-square p-2 rounded-full hover:transform hover:scale-110  active:scale-120 hover:cursor-pointer bg-primary-bg duration-300 z-50 overflow-hidden"
+        className="fixed bottom-8 right-8 w-18 aspect-square p-2 rounded-full hover:transform hover:scale-110  active:scale-120 hover:cursor-pointer duration-300 z-50 overflow-hidden"
         aria-label="Book action button"
       >
         <DotLottieReact
