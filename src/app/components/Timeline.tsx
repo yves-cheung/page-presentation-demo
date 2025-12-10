@@ -18,7 +18,7 @@ type TimelineChild = ProgramChild | MilestoneChild;
 
 export default function Timeline() {
   return (
-    <section className="w-full px-8 md:px-16 lg:px-32 relative overflow-hidden flex flex-col justify-center items-center">
+    <section className="w-full pb-16 px-8 md:px-16 lg:px-32 relative overflow-hidden flex flex-col justify-center items-center">
       {/* Cloud decorations with negative z-index */}
       <div className="absolute inset-0 pointer-events-none">
         <Image
@@ -214,7 +214,7 @@ export default function Timeline() {
                   )}
 
                   {/* Text Side */}
-                  {child.text && (
+                  {child.text ? (
                     <div className="md:w-1/2 ml-16 md:ml-0 flex items-center">
                       <ul className="space-y-2 text-custom-black text-sm md:text-base">
                         {child.text.map((item: string, i: number) => (
@@ -225,7 +225,7 @@ export default function Timeline() {
                         ))}
                       </ul>
                     </div>
-                  )}
+                  ): <div className="md:w-1/2 ml-16 md:ml-0 flex items-center"></div>}
                 </div>
               )}
             </div>

@@ -2,9 +2,9 @@ import Image from 'next/image';
 
 export default function DramaSystem() {
   return (
-    <section className="w-full py-16 px-8 md:px-16 lg:px-32 bg-primary-bg">
-      <h2 className="text-3xl md:text-4xl font-bold mb-12 text-custom-black text-center">
-        ATL戲劇教育系統
+    <section className="w-full py-10 pb-12 px-8 md:px-16 lg:px-32 bg-custom-black">
+      <h2 className="text-3xl md:text-4xl font-bold mb-6 text-white text-left">
+        戲劇教育系統
       </h2>
       
       <div className="max-w-6xl mx-auto">
