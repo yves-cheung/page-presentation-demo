@@ -1,5 +1,10 @@
+"use client";
+
 import Image from "next/image";
+import { useRef } from "react";
+import { motion } from "framer-motion";
 import timelineData from "../sample_data/timeline.json";
+import { useCloudAnimation } from "../hooks/useCloudAnimation";
 
 type ProgramChild = {
   type: "program";
@@ -17,38 +22,49 @@ type MilestoneChild = {
 type TimelineChild = ProgramChild | MilestoneChild;
 
 export default function Timeline() {
+  const sectionRef = useRef<HTMLElement>(null);
+  const { cloud1X, cloud2X, cloud3X, cloud4X } = useCloudAnimation(sectionRef);
+
   return (
-    <section className="w-full pb-16 px-8 md:px-16 lg:px-32 relative overflow-hidden flex flex-col justify-center items-center">
-      {/* Cloud decorations with negative z-index */}
+    <section ref={sectionRef} className="w-full pb-16 px-8 md:px-16 lg:px-32 relative overflow-hidden flex flex-col justify-center items-center">
+      {/* Cloud decorations with scroll animation */}
       <div className="absolute inset-0 pointer-events-none">
-        <Image
-          src="/timeline_bg/cloud_1.png"
-          alt=""
-          width={200}
-          height={150}
-          className="absolute top-8 left-0 opacity-80 h-60 w-auto"
-        />
-        <Image
-          src="/timeline_bg/cloud_2.png"
-          alt=""
-          width={200}
-          height={150}
-          className="absolute top-120 right-0 opacity-80 h-40 w-auto"
-        />
-        <Image
-          src="/timeline_bg/cloud_3.png"
-          alt=""
-          width={200}
-          height={150}
-          className="absolute bottom-220 left-[40%] opacity-80 h-32 w-auto"
-        />
-        <Image
-          src="/timeline_bg/cloud_4.png"
-          alt=""
-          width={200}
-          height={150}
-          className="absolute bottom-80 left-0 opacity-80 h-70 w-auto"
-        />
+        <motion.div style={{ x: cloud1X }} className="absolute top-8 left-0">
+          <Image
+            src="/timeline_bg/cloud_1.png"
+            alt=""
+            width={200}
+            height={150}
+            className="opacity-80 h-60 w-auto"
+          />
+        </motion.div>
+        <motion.div style={{ x: cloud2X }} className="absolute top-120 right-0">
+          <Image
+            src="/timeline_bg/cloud_2.png"
+            alt=""
+            width={200}
+            height={150}
+            className="opacity-80 h-40 w-auto"
+          />
+        </motion.div>
+        <motion.div style={{ x: cloud3X }} className="absolute bottom-220 left-[40%]">
+          <Image
+            src="/timeline_bg/cloud_3.png"
+            alt=""
+            width={200}
+            height={150}
+            className="opacity-80 h-32 w-auto"
+          />
+        </motion.div>
+        <motion.div style={{ x: cloud4X }} className="absolute bottom-80 left-30">
+          <Image
+            src="/timeline_bg/cloud_4.png"
+            alt=""
+            width={200}
+            height={150}
+            className="opacity-80 h-100 w-auto"
+          />
+        </motion.div>
       </div>
 
       <h2 className="text-2xl md:text-3xl font-normal mb-12 text-custom-black text-center bg-white w-fit py-3 px-8 rounded-full z-10 tracking-widest">
@@ -236,7 +252,7 @@ export default function Timeline() {
         {/* 3 black square dots at the end */}
         <div className="absolute bottom-0 left-8 md:left-1/2 transform md:-translate-x-1/2 flex flex-col gap-2 mt-4">
           {[1, 2, 3].map((_, i) => (
-            <div className="w-1.5 aspect-square bg-custom-black"></div>
+            <div key={i} className="w-1.5 aspect-square bg-custom-black"></div>
           ))}
         </div>
       </div>
