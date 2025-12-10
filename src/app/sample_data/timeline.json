@@ -32,7 +32,7 @@
             ]
         },
         {
-            "label": "2016-2019學年",
+            "label": "2017年",
             "children": [
                 {   "type": "milestone",
                     "text": [
@@ -56,6 +56,16 @@
                 }
             ]
         },
+        {   "label": "2023年",
+            "children": [
+                {   
+                    "type": "milestone",
+                    "text": [
+                        "獲第十七屆香港藝術發展獎 — \n 藝術推廣及教育獎"
+                    ]
+                }
+            ]
+        },
         {
             "label": "2023-2026學年",
             "children": [
@@ -63,15 +73,6 @@
                     "img": "timeline/photo_4.png",
                     "img_title": "賽馬會中國經典名著教育劇場計劃",
                     "img_title_position": "out-bottom"
-                }
-            ]
-        },
-        {
-            "children": [
-                {   "type": "milestone",
-                    "text": [
-                        "獲第十七屆香港藝術發展獎 — \n 藝術推廣及教育獎"
-                    ]
                 }
             ]
         }
