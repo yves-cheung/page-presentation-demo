@@ -1,0 +1,79 @@
+{
+    "title": "教育劇場發展",
+    "nodes": [
+        {
+            "label": "2015-2016學年",
+            "children": [
+                {   "type": "program",
+                    "img": "timeline/photo_1.png",
+                    "img_title": "戲說《西遊記》教育劇場計劃",
+                    "img_title_position": "in-bottom",
+                    "text": [
+                        "以中國四大名著《西遊記》作為戲劇教學文本",
+                        "旨在讓學生置身取西經路途之中親身經歷",
+                        "透過戲劇情境引導學生思索和解決困難"
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "2016-2019學年",
+            "children": [
+                {   "type": "program",
+                    "img": "timeline/photo_2.png",
+                    "img_title": "賽馬會諸子百家教育劇場發展計劃",
+                    "img_title_position": "in-bottom",
+                    "text": [
+                        "以諸子百家哲學思想為主題開啟中國文化視野",
+                        "涵蓋高小及初中級別，運用教育劇場模式實踐",
+                        "運用角色扮演和互動，讓學生在情境中發揮「做中學」"
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "2016-2019學年",
+            "children": [
+                {   "type": "milestone",
+                    "text": [
+                        "獲「香港藝術發展獎」之「藝術教育獎」（非學校組）優異表現獎"
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "2016-2019學年",
+            "children": [
+                {   "type": "program",
+                    "img": "timeline/photo_3.png",
+                    "img_title": "賽馬會中國詩人別傳教育劇場計劃",
+                    "img_title_position": "in-bottom",
+                    "text": [
+                        "以中國詩詞作為戲劇文本，橫跨高小至中學級別",
+                        "透過欣賞詩詞作品提升寫作技巧及文學欣賞能力",
+                        "通過戲劇活動讓學生感受詩歌並培養品德情操"
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "2023-2026學年",
+            "children": [
+                {   "type": "program",
+                    "img": "timeline/photo_4.png",
+                    "img_title": "賽馬會中國經典名著教育劇場計劃",
+                    "img_title_position": "out-bottom"
+                }
+            ]
+        },
+        {
+            "children": [
+                {   "type": "milestone",
+                    "text": [
+                        "獲第十七屆香港藝術發展獎 — \n 藝術推廣及教育獎"
+                    ]
+                }
+            ]
+        }
+    ]
+}
