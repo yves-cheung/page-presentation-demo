@@ -1,3 +1,5 @@
+"use client";
+
 import Header from "./components/Header";
 import ArtEducationIntro from "./components/ArtEducationIntro";
 import Timeline from "./components/Timeline";
@@ -6,10 +8,12 @@ import Outcome from "./components/Outcome";
 import Interviews from "./components/Interviews";
 import DramaShowcase from "./components/DramaShowcase";
 import Image from "next/image";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen items-center justify-start bg-primary-bg font-sans">
+    <div className="flex flex-col min-h-screen items-center justify-start bg-primary-bg font-sans pb-16">
+      
       <Header />
       
       <Image
@@ -27,15 +31,23 @@ export default function Home() {
 
       <DramaSystem />
 
-      <Outcome />
+      {/* <Outcome />
 
-      <Interviews />
+      <Interviews /> */}
 
       <DramaShowcase />
 
-      {/* Floating action button - placeholder for Lottie animation */}
-      <button className="fixed bottom-8 right-8 w-16 h-16 bg-highlight rounded-full shadow-2xl hover:scale-110 transition-transform duration-300 flex items-center justify-center text-white font-bold z-50">
-        <span className="text-2xl">📖</span>
+      {/* Floating action button with Lottie animation */}
+      <button 
+        className="fixed bottom-8 right-8 w-18 aspect-square p-2 rounded-full hover:transform hover:scale-110  active:scale-120 hover:cursor-pointer bg-primary-bg duration-300 z-50 overflow-hidden"
+        aria-label="Book action button"
+      >
+        <DotLottieReact
+          src="/floating_button_book.lottie"
+          loop
+          autoplay
+          className="w-full h-full"
+        />
       </button>
     </div>
   );

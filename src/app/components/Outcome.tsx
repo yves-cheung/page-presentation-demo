@@ -8,7 +8,7 @@ export default function Outcome() {
   ];
 
   return (
-    <section className="w-full py-16 px-8 md:px-16 lg:px-32 bg-white">
+    <section className="w-full py-16 px-8 md:px-16 lg:px-32">
       <h2 className="text-3xl md:text-4xl font-bold mb-12 text-custom-black text-center">
         教育成果
       </h2>

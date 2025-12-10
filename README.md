@@ -1,24 +1,54 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Page Presentation Demo
+
+A Next.js presentation website showcasing art education and drama programs with interactive animations and components.
+
+## Features
+
+- **Hero Section**: Eye-catching header with visual presentation
+- **Art Education Introduction**: Overview of art education programs
+- **Interactive Timeline**: Animated timeline with cloud effects
+- **Drama System**: Detailed drama education system presentation
+- **Outcome Statistics**: Visual representation of program outcomes
+- **Interviews Section**: Testimonials and interviews
+- **Drama Showcase**: Gallery of drama performances
+- **Floating Action Button**: Animated Lottie button for quick actions
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies:
 
 ```bash
-npm run dev
-# or
+yarn
+```
+
+Then, run the development server:
+
+```bash
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Next.js 16**: React framework with App Router
+- **React 19**: Latest React version
+- **TypeScript**: Type-safe development
+- **Tailwind CSS**: Utility-first CSS framework
+- **Framer Motion**: Animation library
+- **Lottie Animations**: Interactive vector animations
+
+## System Requirements
+
+- Node.js 20 or later
+- Yarn package manager
+
+## Project Structure
+
+- `/src/app/components` - Reusable React components
+- `/src/app/hooks` - Custom React hooks
+- `/src/app/sample_data` - Sample JSON data
+- `/public` - Static assets (images, animations)
 
 ## Learn More
 
@@ -26,8 +56,6 @@ To learn more about Next.js, take a look at the following resources:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
 ## Deploy on Vercel
 
