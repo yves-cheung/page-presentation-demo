@@ -10,10 +10,12 @@ import DramaShowcase from "./components/DramaShowcase";
 import Image from "next/image";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Footer from "./components/Footer";
+import CustomCursor from "./components/CustomCursor";
 
 export default function Home() {
   return (
     <div className="flex flex-col min-h-screen items-center justify-start bg-primary-bg font-sans">
+      <CustomCursor />
       
       <Header />
       
