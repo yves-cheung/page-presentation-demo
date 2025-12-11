@@ -43,7 +43,9 @@ export default function Outcome() {
         />
       </div>
 
-      <div></div>
+      <div className="w-full flex justify-end ">
+        <p className="text-xs"> 資料來源：賽馬會中國詩人別傳教育劇場計劃 2021-2022 研究報告</p>
+      </div>
 
       {/* Moving text box */}
       <div className="absolute bottom-0 left-0 w-full flex justify-center">
