@@ -13,7 +13,7 @@ export default function DramaShowcase() {
   ];
 
   return (
-    <section className="w-full py-16 pb-32 px-8 md:px-16 lg:px-32 bg-custom-black">
+    <section className="w-full py-12 pb-16 px-8 md:px-16 lg:px-32 bg-custom-black">
       <div className="w-full flex flex-col items-center mb-12 relative">
         <h2 className="text-2xl md:text-3xl font-medium text-white text-center relative z-10">
           愛麗絲劇場實驗室 演出劇目

@@ -9,6 +9,7 @@ import Interviews from "./components/Interviews";
 import DramaShowcase from "./components/DramaShowcase";
 import Image from "next/image";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import Footer from "./components/Footer";
 
 export default function Home() {
   return (
@@ -36,6 +37,8 @@ export default function Home() {
       {/* <Interviews /> */}
 
       <DramaShowcase />
+      
+      <Footer/>
 
       <button 
         className="fixed bottom-8 right-8 w-18 aspect-square p-2 rounded-full hover:transform hover:scale-110  active:scale-120 hover:cursor-pointer duration-300 z-50 overflow-hidden"
