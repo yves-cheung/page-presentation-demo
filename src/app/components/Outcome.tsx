@@ -1,33 +1,18 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState, useEffect } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useRef, useState } from "react";
+import { motion } from "framer-motion";
 import outcomeStat from "../sample_data/outcome.json";
 
 export default function Outcome() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  // Track scroll progress within the container
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
-  });
-
-  // Update image index based on scroll progress
-  useEffect(() => {
-    const unsubscribe = scrollYProgress.on("change", (latest) => {
-      // Divide scroll progress into 4 sections (one for each stat)
-      const newIndex = Math.min(
-        Math.floor(latest * outcomeStat.length),
-        outcomeStat.length - 1
-      );
-      setCurrentImageIndex(newIndex);
-    });
-
-    return () => unsubscribe();
-  }, [scrollYProgress]);
+  // Update image index when text cards enter viewport
+  const handleViewportEnter = (index: number) => {
+    setCurrentImageIndex(index);
+  };
 
   return (
     <div ref={containerRef} className="relative">
@@ -105,6 +90,7 @@ export default function Outcome() {
               <motion.div
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
+                onViewportEnter={() => handleViewportEnter(index)}
                 viewport={{ once: false, amount: 0.5 }}
                 transition={{ duration: 0.6 }}
                 className="bg-white/90 rounded-2xl px-6 py-6 border border-gray-700 max-w-[90vw] sm:max-w-[500px] mx-auto my-[50vh] pointer-events-auto"
