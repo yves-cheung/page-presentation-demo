@@ -1,4 +1,5 @@
 import Image from "next/image";
+import outcomeStat from "../sample_data/outcome.json";
 
 export default function Outcome() {
   const stats = [
@@ -8,7 +9,7 @@ export default function Outcome() {
   ];
 
   return (
-    <section className="w-full py-16 px-8 md:px-16 lg:px-32">
+    <section className="w-full py-16 px-8 md:px-16 lg:px-32 min-h-screen flex flex-col justify-between relative">
       <div className="w-full flex flex-col items-end mb-12 relative">
         <h2 className="text-2xl md:text-3xl font-medium text-custom-black text-center z-10 relative">
           教育成果
@@ -24,36 +25,30 @@ export default function Outcome() {
         </svg>
       </div>
 
-      <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-8 items-center">
-        {/* Left side - Circular chart */}
-        <div className="relative flex items-center justify-center">
-          <Image
-            src="/outcome/stat_1.png"
-            alt="Education Outcome Statistics"
-            width={400}
-            height={400}
-            className="w-full max-w-md h-auto"
-          />
-        </div>
+      {/* Background chagning Statistic Image */}
+      <div className="max-w-6xl mx-auto flex flex-col items-center justify-center w-full relative">
+        <Image
+          src={outcomeStat[0].img}
+          alt="Education Outcome Statistics"
+          width={400}
+          height={400}
+          className="max-w-md h-auto z-10"
+        />
+        <Image
+          src="/outcome/bg.png"
+          alt="bacground decoration"
+          width={400}
+          height={400}
+          className="absolute w-full z-0 "
+        />
+      </div>
 
-        {/* Right side - Statistics */}
-        <div className="space-y-8">
-          {stats.map((stat, index) => (
-            <div key={index} className="flex items-center space-x-4">
-              <div
-                className="w-16 h-16 rounded-full flex items-center justify-center text-white font-bold text-xl"
-                style={{ backgroundColor: stat.color }}
-              >
-                {index + 1}
-              </div>
-              <div>
-                <div className="text-3xl md:text-4xl font-bold text-highlight">
-                  {stat.number}
-                </div>
-                <div className="text-lg text-custom-black">{stat.label}</div>
-              </div>
-            </div>
-          ))}
+      <div></div>
+
+      {/* Moving text box */}
+      <div className="absolute bottom-0 left-0 w-full flex justify-center">
+        <div className="bg-white/70 border-1 border-custom-black p-6 px-10 rounded-xl text-center z-20 w-fit">
+          <p>{outcomeStat[0].text}</p>
         </div>
       </div>
     </section>
