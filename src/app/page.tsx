@@ -12,7 +12,7 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen items-center justify-start bg-primary-bg font-sans pb-16">
+    <div className="flex flex-col min-h-screen items-center justify-start bg-primary-bg font-sans">
       
       <Header />
       
@@ -33,7 +33,7 @@ export default function Home() {
 
       <Outcome />
 
-      <Interviews />
+      {/* <Interviews /> */}
 
       <DramaShowcase />
 
