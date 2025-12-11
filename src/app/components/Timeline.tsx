@@ -124,7 +124,7 @@ export default function Timeline() {
                     <div 
                       className="text-custom-black font-bold text-lg md:text-xl ml-16 md:ml-0"
                       data-aos={labelAnimation}
-                      data-aos-offset="300"
+                      data-aos-offset="100"
                       data-aos-easing="ease-in-sine"
                     >
                       {node.label}
@@ -218,7 +218,7 @@ export default function Timeline() {
                     <div 
                       className="md:w-1/2 md:max-w-90 ml-16 md:ml-0"
                       data-aos={imageAnimation}
-                      data-aos-offset="300"
+                      data-aos-offset="100"
                       data-aos-easing="ease-in-sine"
                     >
                       <div className="relative rounded-lg shadow-lg overflow-hidden">
@@ -269,7 +269,7 @@ export default function Timeline() {
                     <div 
                       className="md:w-1/2 ml-16 md:ml-0 flex items-center"
                       data-aos={textAnimation}
-                      data-aos-offset="300"
+                      data-aos-offset="100"
                       data-aos-easing="ease-in-sine"
                       data-aos-delay="200"
                     >

@@ -48,7 +48,7 @@ export default function ArtEducationIntro() {
             教育？
           </h2>
 
-          <p className="sm:ml-10 lg:ml-20 md:ml-14 text-xs md:text-base lg:text-lg leading-relaxed text-white">
+          <p className="sm:ml-10 lg:ml-20 md:ml-14 text-xs md:text-base lg:text-lg leading-relaxed text-white text-justify">
             {artEducationData.content}
           </p>
         </div>
