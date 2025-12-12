@@ -2,14 +2,14 @@ import Image from "next/image";
 
 export default function DramaShowcase() {
   const posters = [
-    { src: "/drama_poster/poster_1.jpg", alt: "Drama Poster 1" },
-    { src: "/drama_poster/poster_2.jpg", alt: "Drama Poster 2" },
-    { src: "/drama_poster/poster_3.jpg", alt: "Drama Poster 3" },
-    { src: "/drama_poster/poster_4.jpg", alt: "Drama Poster 4" },
-    { src: "/drama_poster/poster_5.jpg", alt: "Drama Poster 5" },
-    { src: "/drama_poster/poster_6.jpg", alt: "Drama Poster 6" },
-    { src: "/drama_poster/poster_7.jpg", alt: "Drama Poster 7" },
-    { src: "/drama_poster/poster_8.jpg", alt: "Drama Poster 8" },
+    { src: "/drama_poster/poster_1.webp", alt: "Drama Poster 1" },
+    { src: "/drama_poster/poster_2.webp", alt: "Drama Poster 2" },
+    { src: "/drama_poster/poster_3.webp", alt: "Drama Poster 3" },
+    { src: "/drama_poster/poster_4.webp", alt: "Drama Poster 4" },
+    { src: "/drama_poster/poster_5.webp", alt: "Drama Poster 5" },
+    { src: "/drama_poster/poster_6.webp", alt: "Drama Poster 6" },
+    { src: "/drama_poster/poster_7.webp", alt: "Drama Poster 7" },
+    { src: "/drama_poster/poster_8.webp", alt: "Drama Poster 8" },
   ];
 
   return (
