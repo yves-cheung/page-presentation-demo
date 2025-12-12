@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Header from "./components/Header";
 import ArtEducationIntro from "./components/ArtEducationIntro";
 import Timeline from "./components/Timeline";
@@ -12,8 +13,11 @@ import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Footer from "./components/Footer";
 import CustomCursor from "./components/CustomCursor";
 import SwipeCards from "./components/SwipeCards";
+import VideoPlayer from "./components/VideoPlayer";
 
 export default function Home() {
+  const [isVideoOpen, setIsVideoOpen] = useState(false);
+
   return (
     <div className="flex flex-col min-h-screen items-center justify-start bg-primary-bg font-sans">
       <CustomCursor />
@@ -47,6 +51,7 @@ export default function Home() {
       <button 
         className="fixed bottom-8 right-8 w-18 aspect-square p-2 rounded-full hover:transform hover:scale-110  active:scale-120 hover:cursor-pointer duration-300 z-50 overflow-hidden"
         aria-label="Book action button"
+        onClick={() => setIsVideoOpen(true)}
       >
         <DotLottieReact
           src="/floating_button_book.lottie"
@@ -55,6 +60,8 @@ export default function Home() {
           className="w-full h-full"
         />
       </button>
+
+      <VideoPlayer isOpen={isVideoOpen} onClose={() => setIsVideoOpen(false)} />
     </div>
   );
 }
