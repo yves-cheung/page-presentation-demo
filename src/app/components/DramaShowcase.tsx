@@ -3,21 +3,13 @@
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
+import DramaData from "../sample_data/drama.json";
 
 // Import Swiper styles
 import "swiper/css";
 
 export default function DramaShowcase() {
-  const posters = [
-    { src: "/drama_poster/poster_1.webp", alt: "Drama Poster 1" },
-    { src: "/drama_poster/poster_2.webp", alt: "Drama Poster 2" },
-    { src: "/drama_poster/poster_3.webp", alt: "Drama Poster 3" },
-    { src: "/drama_poster/poster_4.webp", alt: "Drama Poster 4" },
-    { src: "/drama_poster/poster_5.webp", alt: "Drama Poster 5" },
-    { src: "/drama_poster/poster_6.webp", alt: "Drama Poster 6" },
-    { src: "/drama_poster/poster_7.webp", alt: "Drama Poster 7" },
-    { src: "/drama_poster/poster_8.webp", alt: "Drama Poster 8" },
-  ];
+  const posters = DramaData;
 
   return (
     <section className="w-full py-12 pb-16 px-8 md:px-16 lg:px-32 bg-custom-black">
