@@ -15,11 +15,11 @@ export default function Outcome() {
   };
 
   return (
-    <div ref={containerRef} className="relative">
+    <div ref={containerRef} className="relative w-full ">
       {/* Scroll Story Container */}
-      <div className="relative min-h-[400vh]">
+      <div className="relative w-full min-h-[400vh]">
         {/* Fixed Background Container */}
-        <div className="sticky top-0 w-[100vw] h-screen overflow-hidden">
+        <div className="sticky top-0 w-full h-screen overflow-hidden">
           {/* Header Section - Outside scroll container */}
           <section className="w-full py-16 px-8 md:px-16 lg:px-32 flex flex-col justify-between relative">
             <div className="w-full flex flex-col items-end mb-12 relative">
@@ -55,7 +55,7 @@ export default function Outcome() {
                     alt={`Education Outcome Statistics ${index + 1}`}
                     width={400}
                     height={400}
-                    className="max-w-md h-auto z-10 relative"
+                    className="max-w-md px-10 h-auto z-10 relative"
                   />
                   <Image
                     src="/outcome/bg.png"

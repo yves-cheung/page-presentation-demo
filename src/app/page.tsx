@@ -11,6 +11,7 @@ import Image from "next/image";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 import Footer from "./components/Footer";
 import CustomCursor from "./components/CustomCursor";
+import SwipeCards from "./components/SwipeCards";
 
 export default function Home() {
   return (
@@ -37,6 +38,7 @@ export default function Home() {
       <Outcome />
 
       {/* <Interviews /> */}
+      {/* <SwipeCards /> */}
 
       <DramaShowcase />
       

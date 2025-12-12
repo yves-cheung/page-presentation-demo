@@ -81,7 +81,7 @@ export default function Timeline() {
 
       <div className="relative max-w-6xl mx-auto">
         {/* Timeline line */}
-        <div className="absolute left-8 md:left-1/2 top-0 bottom-11 w-1.5 bg-custom-black transform md:-translate-x-1/2"></div>
+        <div className="absolute left-4 md:left-1/2 top-0 bottom-11 w-1.5 bg-custom-black transform md:-translate-x-1/2"></div>
 
         {(() => {
           let lastSideForImages = true; // true = left, false = right
@@ -132,7 +132,7 @@ export default function Timeline() {
                   </div>
 
                   {/* Timeline dot at label level */}
-                  <div className="absolute left-8 md:left-1/2 transform -translate-x-[11px] md:-translate-x-1/2">
+                  <div className="absolute left-4 md:left-1/2 transform -translate-x-[11px] md:-translate-x-1/2">
                     {isFirstNode ? (
                       // First dot: larger with white ring decoration
                       <div className="relative">
@@ -291,7 +291,7 @@ export default function Timeline() {
         })()}
 
         {/* 3 black square dots at the end */}
-        <div className="absolute bottom-0 left-8 md:left-1/2 transform md:-translate-x-1/2 flex flex-col gap-2 mt-4">
+        <div className="absolute bottom-0 left-4 md:left-1/2 transform md:-translate-x-1/2 flex flex-col gap-2 mt-4">
           {[1, 2, 3].map((_, i) => (
             <div key={i} className="w-1.5 aspect-square bg-custom-black"></div>
           ))}
