@@ -38,7 +38,7 @@ export default function Home() {
       <Outcome />
 
       {/* <Interviews /> */}
-      {/* <SwipeCards /> */}
+      <SwipeCards />
 
       <DramaShowcase />
       
