@@ -7,6 +7,20 @@ export default function CustomCursor() {
   const [isVisible, setIsVisible] = useState(false);
   const [isAtBottom, setIsAtBottom] = useState(false);
   const [isClicked, setIsClicked] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+
+  useEffect(() => {
+    // Detect touch device
+    const checkTouchDevice = () => {
+      return (
+        'ontouchstart' in window ||
+        navigator.maxTouchPoints > 0 ||
+        window.matchMedia('(pointer: coarse)').matches
+      );
+    };
+    
+    setIsTouchDevice(checkTouchDevice());
+  }, []);
 
   useEffect(() => {
     let animationFrameId: number;
@@ -67,6 +81,9 @@ export default function CustomCursor() {
       }
     };
   }, []);
+
+  // Hide cursor on touch devices
+  if (isTouchDevice) return null;
 
   return (
     <div

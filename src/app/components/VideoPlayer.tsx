@@ -42,14 +42,14 @@ export default function VideoPlayer({ isOpen, onClose }: VideoPlayerProps) {
 
   return (
     <div
-      className="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center transition-opacity duration-300"
+      className="fixed inset-0 bg-black/50 z-[100] flex items-center justify-center transition-opacity duration-300 overflow-hidden"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
       aria-label="Video player overlay"
     >
       <div
-        className="relative w-full max-w-4xl aspect-video mx-4"
+        className="relative w-full max-w-4xl aspect-video px-2 sm:px-4"
         onClick={(e) => e.stopPropagation()}
       >
         <iframe

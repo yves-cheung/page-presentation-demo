@@ -19,7 +19,7 @@ export default function Home() {
   const [isVideoOpen, setIsVideoOpen] = useState(false);
 
   return (
-    <div className="flex flex-col min-h-screen items-center justify-start bg-primary-bg font-sans">
+    <div className="flex flex-col min-h-screen items-center justify-start bg-primary-bg font-sans overflow-x-clip">
       <CustomCursor />
       
       <Header />
