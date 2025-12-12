@@ -39,6 +39,8 @@ export default function SwipeCards() {
           alt="background image"
           fill
           className="object-cover opacity-80"
+          loading="lazy"
+          sizes="100vw"
         />
       </div>
 

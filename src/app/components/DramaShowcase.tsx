@@ -69,6 +69,8 @@ export default function DramaShowcase() {
                     alt={poster.alt}
                     fill
                     className="object-cover"
+                    loading="lazy"
+                    sizes="(max-width: 640px) 50vw, (max-width: 768px) 33vw, (max-width: 1024px) 25vw, (max-width: 1280px) 20vw, 16vw"
                   />
                 </div>
               </a>

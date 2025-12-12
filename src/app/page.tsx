@@ -1,19 +1,36 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import Header from "./components/Header";
 import ArtEducationIntro from "./components/ArtEducationIntro";
-import Timeline from "./components/Timeline";
-import DramaSystem from "./components/DramaSystem";
-import Outcome from "./components/Outcome";
-import Interviews from "./components/Interviews";
-import DramaShowcase from "./components/DramaShowcase";
 import Image from "next/image";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
-import Footer from "./components/Footer";
 import CustomCursor from "./components/CustomCursor";
-import SwipeCards from "./components/SwipeCards";
-import VideoPlayer from "./components/VideoPlayer";
+
+// Lazy load below-the-fold components
+const Timeline = dynamic(() => import("./components/Timeline"), {
+  loading: () => <div className="min-h-screen w-full" />,
+  ssr: false, // Disable SSR to prevent AOS hydration errors
+});
+const DramaSystem = dynamic(() => import("./components/DramaSystem"), {
+  loading: () => <div className="min-h-[600px] w-full" />,
+});
+const Outcome = dynamic(() => import("./components/Outcome"), {
+  loading: () => <div className="min-h-screen w-full" />,
+});
+const SwipeCards = dynamic(() => import("./components/SwipeCards"), {
+  loading: () => <div className="min-h-[500px] w-full" />,
+});
+const DramaShowcase = dynamic(() => import("./components/DramaShowcase"), {
+  loading: () => <div className="min-h-[400px] w-full" />,
+});
+const Footer = dynamic(() => import("./components/Footer"), {
+  loading: () => <div className="min-h-[200px] w-full" />,
+});
+const VideoPlayer = dynamic(() => import("./components/VideoPlayer"), {
+  ssr: false,
+});
 
 export default function Home() {
   const [isVideoOpen, setIsVideoOpen] = useState(false);

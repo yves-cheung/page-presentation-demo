@@ -56,6 +56,8 @@ export default function Outcome() {
                     width={400}
                     height={400}
                     className="max-w-md px-10 h-auto z-10 relative"
+                    loading="lazy"
+                    sizes="(max-width: 768px) 90vw, 400px"
                   />
                   <Image
                     src="/outcome/bg.png"
@@ -63,6 +65,7 @@ export default function Outcome() {
                     width={400}
                     height={400}
                     className="absolute w-full z-0"
+                    loading="lazy"
                   />
                 </div>
               </motion.div>

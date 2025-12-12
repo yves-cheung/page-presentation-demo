@@ -44,6 +44,7 @@ export default function Timeline() {
             width={200}
             height={150}
             className="opacity-80 h-60 w-auto"
+            loading="lazy"
           />
         </motion.div>
         <motion.div style={{ x: cloud2X }} className="absolute top-120 right-0">
@@ -53,6 +54,7 @@ export default function Timeline() {
             width={200}
             height={150}
             className="opacity-80 h-40 w-auto"
+            loading="lazy"
           />
         </motion.div>
         <motion.div style={{ x: cloud3X }} className="absolute bottom-220 left-[40%]">
@@ -62,6 +64,7 @@ export default function Timeline() {
             width={200}
             height={150}
             className="opacity-80 h-32 w-auto"
+            loading="lazy"
           />
         </motion.div>
         <motion.div style={{ x: cloud4X }} className="absolute bottom-80 left-30">
@@ -71,6 +74,7 @@ export default function Timeline() {
             width={200}
             height={150}
             className="opacity-80 h-100 w-auto"
+            loading="lazy"
           />
         </motion.div>
       </div>
@@ -228,6 +232,8 @@ export default function Timeline() {
                           width={500}
                           height={300}
                           className="w-full h-auto"
+                          loading="lazy"
+                          sizes="(max-width: 768px) 100vw, 50vw"
                         />
                         {child.img_title &&
                           child.img_title_position === "in-bottom" && (
