@@ -91,9 +91,9 @@ export default function Outcome() {
                 initial={{ opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 onViewportEnter={() => handleViewportEnter(index)}
-                viewport={{ once: false, amount: 0.5 }}
+                viewport={{ once: false, amount: 0.3 }}
                 transition={{ duration: 0.6 }}
-                className="bg-white/90 rounded-2xl px-6 py-6 border border-gray-700 max-w-[90vw] sm:max-w-[500px] mx-auto my-[50vh] pointer-events-auto"
+                className="bg-white/90 rounded-2xl px-6 py-6 border border-gray-700 max-w-[90vw] sm:max-w-[500px] mx-auto  pointer-events-auto"
               >
                 <div className="mx-auto text">
                   <p className="text-sm md:text-base leading-6">{stat.text}</p>
