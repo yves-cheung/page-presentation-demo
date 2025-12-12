@@ -72,3 +72,44 @@ body {
 .swipe-card-scroll::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.4);
 }
+
+/* Drama Showcase Swiper Navigation Styles */
+.drama-showcase-swiper .swiper-button-next,
+.drama-showcase-swiper .swiper-button-prev {
+  color: #D37748;
+  background: rgba(255, 255, 255, 0.9);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+.drama-showcase-swiper .swiper-button-next:after,
+.drama-showcase-swiper .swiper-button-prev:after {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.drama-showcase-swiper .swiper-button-next:hover,
+.drama-showcase-swiper .swiper-button-prev:hover {
+  background: rgba(255, 255, 255, 1);
+  transform: scale(1.1);
+}
+
+.drama-showcase-swiper .swiper-button-disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+@media (max-width: 640px) {
+  .drama-showcase-swiper .swiper-button-next,
+  .drama-showcase-swiper .swiper-button-prev {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .drama-showcase-swiper .swiper-button-next:after,
+  .drama-showcase-swiper .swiper-button-prev:after {
+    font-size: 16px;
+  }
+}

@@ -1,4 +1,11 @@
+'use client';
+
 import Image from "next/image";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+
+// Import Swiper styles
+import "swiper/css";
 
 export default function DramaShowcase() {
   const posters = [
@@ -29,22 +36,53 @@ export default function DramaShowcase() {
         </svg>
       </div>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6">
-        {posters.map((poster, index) => (
-          <a href="/" className="cursor-pointer" key={index}>
-            <div
-              key={index}
-              className="relative aspect-[3/4] rounded-lg overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300"
-            >
-              <Image
-                src={poster.src}
-                alt={poster.alt}
-                fill
-                className="object-cover"
-              />
-            </div>
-          </a>
-        ))}
+      <div className="max-w-6xl mx-auto">
+        <Swiper
+          modules={[Autoplay]}
+          spaceBetween={24}
+          slidesPerView={2}
+          loop={true}
+          autoplay={{
+            delay: 3000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }}
+          grabCursor={true}
+          breakpoints={{
+            640: {
+              slidesPerView: 3,
+              spaceBetween: 24,
+            },
+            768: {
+              slidesPerView: 4,
+              spaceBetween: 24,
+            },
+            1024: {
+              slidesPerView: 5,
+              spaceBetween: 24,
+            },
+            1280: {
+              slidesPerView: 6,
+              spaceBetween: 24,
+            },
+          }}
+          className="drama-showcase-swiper"
+        >
+          {posters.map((poster, index) => (
+            <SwiperSlide key={index}>
+              <a href="/" className="cursor-pointer block">
+                <div className="relative aspect-[3/4] rounded-lg overflow-hidden shadow-lg hover:scale-105 transition-transform duration-300">
+                  <Image
+                    src={poster.src}
+                    alt={poster.alt}
+                    fill
+                    className="object-cover"
+                  />
+                </div>
+              </a>
+            </SwiperSlide>
+          ))}
+        </Swiper>
       </div>
     </section>
   );
