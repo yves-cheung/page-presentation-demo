@@ -32,7 +32,7 @@ export default function SwipeCards() {
   const reviews: Review[] = reviewData;
 
   return (
-    <section className="h-[50vh] min-h-[500px] w-full flex items-center justify-center relative overflow-x-hidden">
+    <section className="h-[50vh] min-h-[500px] w-full flex items-center justify-center relative overflow-hidden">
       <div className="absolute top-0 w-full h-full">
         <Image
           src="/bg_2.png"
