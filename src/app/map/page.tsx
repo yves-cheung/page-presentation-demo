@@ -61,11 +61,11 @@ export default function MapPage() {
     const checkMobile = () => {
       setIsMobile(window.innerWidth < 768); // 768px is the 'md' breakpoint
     };
-    
+
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
   const mapOption = {
@@ -76,7 +76,7 @@ export default function MapPage() {
       left: "center",
       top: "2%",
       textStyle: {
-        fontSize: selectedDistrict? 38: 24,
+        fontSize: selectedDistrict ? 38 : 24,
         fontWeight: "bold",
         color: "#333",
       },
@@ -101,10 +101,10 @@ export default function MapPage() {
     visualMap: {
       show: !selectedDistrict,
       orient: isMobile ? "horizontal" : "vertical",
-      left: isMobile ? "center" : undefined,
-      right: isMobile ? undefined : "5%",
-      bottom: isMobile ? "2%" : undefined,
-      top: isMobile ? undefined : "center",
+    //   left: isMobile ? "center" : undefined,
+      right: isMobile ? "center" : "0%",
+      bottom: isMobile ? "15%" : '0%',
+    //   top: isMobile ? undefined : "center",
       itemWidth: isMobile ? 12 : 20,
       itemHeight: isMobile ? 80 : 200,
       textStyle: {
@@ -139,7 +139,7 @@ export default function MapPage() {
         label: {
           show: showLabel && !!selectedDistrict,
           formatter: function (params: any) {
-            return `Population: ${params.value?.toLocaleString() || ''}`;
+            return `Population: ${params.value?.toLocaleString() || ""}`;
           },
           fontSize: 24,
           fontWeight: "bold",
@@ -205,7 +205,7 @@ export default function MapPage() {
     },
     xAxis: {
       type: "value",
-    //   name: isMobile ? "" : "Population",
+      //   name: isMobile ? "" : "Population",
       nameLocation: "middle",
       nameGap: 25,
       nameTextStyle: {
@@ -216,18 +216,18 @@ export default function MapPage() {
       axisLabel: {
         rotate: isMobile ? 45 : 0,
         fontSize: isMobile ? 9 : 11,
-        interval: isMobile ? 'auto' : 0,
-        formatter: function(value: number) {
+        interval: isMobile ? "auto" : 0,
+        formatter: function (value: number) {
           if (isMobile) {
-            return (value / 1000).toFixed(0) + 'k';
+            return (value / 1000).toFixed(0) + "k";
           }
           return value.toLocaleString();
-        }
+        },
       },
     },
     yAxis: {
       type: "category",
-    //   name: isMobile ? "" : "District",
+      //   name: isMobile ? "" : "District",
       nameLocation: "middle",
       nameGap: isMobile ? 50 : 60,
       nameTextStyle: {
@@ -329,7 +329,7 @@ export default function MapPage() {
       const timer = setTimeout(() => {
         setShowLabel(true);
       }, 1000);
-      
+
       return () => clearTimeout(timer);
     } else {
       setShowLabel(false);
@@ -344,15 +344,15 @@ export default function MapPage() {
         echarts.registerMap("HK", hkJson as any);
       }
 
-          // Register individual districts for zooming
-    const geoJSON = mapDisplayMode === "simple" ? hkJsonSimple : hkJson;
-    (geoJSON as any).features.forEach((feature: any) => {
-      const districtName = feature.properties.name;
-      echarts.registerMap(districtName, {
-        type: "FeatureCollection",
-        features: [feature],
-      } as any);
-    });
+      // Register individual districts for zooming
+      const geoJSON = mapDisplayMode === "simple" ? hkJsonSimple : hkJson;
+      (geoJSON as any).features.forEach((feature: any) => {
+        const districtName = feature.properties.name;
+        echarts.registerMap(districtName, {
+          type: "FeatureCollection",
+          features: [feature],
+        } as any);
+      });
 
       chartInstance.current.setOption(mapOption, true);
     }
@@ -384,7 +384,7 @@ export default function MapPage() {
             Bar
           </button>
         </div>
-        
+
         {viewMode === "map" && (
           <div className="flex flex-wrap gap-1 sm:gap-2">
             <button
@@ -407,7 +407,7 @@ export default function MapPage() {
             >
               Detailed
             </button>
-            
+
             {selectedDistrict && (
               <button
                 onClick={() => setSelectedDistrict(null)}
