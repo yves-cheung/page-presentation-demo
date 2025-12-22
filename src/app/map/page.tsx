@@ -58,7 +58,9 @@ export default function MapPage() {
       trigger: "item",
       formatter: function (params: any) {
         const value = params.value || 0;
-        return `<span style="font-weight:800; font-size:16px">${params.name}</span> <br/>Population: ${value.toLocaleString()}`;
+        return `<span style="font-weight:800; font-size:16px">${
+          params.name
+        }</span> <br/>Population: ${value.toLocaleString()}`;
       },
       backgroundColor: "rgba(50, 50, 50, 0.9)",
       borderColor: "#333",
@@ -244,29 +246,30 @@ export default function MapPage() {
           Bar
         </button>
       </div>
-          {viewMode === "map" && (   <div className="absolute top-20 left-4 z-10 flex gap-2">
-        <button
-          onClick={() => setMapDisplayMode("simple")}
-          className={`px-4 py-2 rounded ${
-            mapDisplayMode === "simple"
-              ? "bg-green-600 text-white"
-              : "bg-white text-gray-800 shadow"
-          }`}
-        >
-          Simple
-        </button>
-        <button
-          onClick={() => setMapDisplayMode("detailed")}
-          className={`px-4 py-2 rounded ${
-            mapDisplayMode === "detailed"
-              ? "bg-green-600 text-white"
-              : "bg-white text-gray-800 shadow"
-          }`}
-        >
-          Detailed
-        </button>
-      </div>)}
-   
+      {viewMode === "map" && (
+        <div className="absolute top-20 left-4 z-10 flex gap-2">
+          <button
+            onClick={() => setMapDisplayMode("simple")}
+            className={`px-4 py-2 rounded ${
+              mapDisplayMode === "simple"
+                ? "bg-green-600 text-white"
+                : "bg-white text-gray-800 shadow"
+            }`}
+          >
+            Simple
+          </button>
+          <button
+            onClick={() => setMapDisplayMode("detailed")}
+            className={`px-4 py-2 rounded ${
+              mapDisplayMode === "detailed"
+                ? "bg-green-600 text-white"
+                : "bg-white text-gray-800 shadow"
+            }`}
+          >
+            Detailed
+          </button>
+        </div>
+      )}
 
       <div ref={chartRef} className="w-full h-full" />
     </div>
