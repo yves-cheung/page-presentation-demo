@@ -4,13 +4,14 @@ import React, { useEffect, useRef, useState } from "react";
 import * as echarts from "echarts";
 import hkJson from "../data/geo_hk.json";
 import hkJsonSimple from "../data/geo_hk_simple.json";
-import { map, view } from "framer-motion/client";
 
 export default function MapPage() {
   const [viewMode, setViewMode] = useState<"map" | "bar">("map");
   const [mapDisplayMode, setMapDisplayMode] = useState<"simple" | "detailed">(
     "detailed"
   );
+  const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null);
+  const [showLabel, setShowLabel] = useState(false);
   const chartRef = useRef<HTMLDivElement>(null);
   const chartInstance = useRef<echarts.ECharts | null>(null);
 
@@ -55,16 +56,19 @@ export default function MapPage() {
 
   const mapOption = {
     title: {
-      text: "Hong Kong District Population",
+      text: selectedDistrict
+        ? `${selectedDistrict}`
+        : "Hong Kong District Population",
       left: "center",
       top: "2%",
       textStyle: {
-        fontSize: 20,
+        fontSize: selectedDistrict? 38: 24,
         fontWeight: "bold",
         color: "#333",
       },
     },
     tooltip: {
+      show: selectedDistrict ? false : true,
       trigger: "item",
       formatter: function (params: any) {
         const value = params.value || 0;
@@ -81,12 +85,12 @@ export default function MapPage() {
       },
     },
     visualMap: {
+      show: !selectedDistrict,
       //   orient: "horizontal",
-      //   show: false,
       right: "5%",
       bottom: "0%",
       //   itemWidth: 200,
-      itemHeight: 300,
+      itemHeight: 100,
       //   align: "bottom",
       textStyle: {
         color: "#7a7a7aff",
@@ -105,16 +109,29 @@ export default function MapPage() {
       {
         id: "population",
         type: "map",
-        roam: true,
-        map: "HK",
+        // roam: true,
+        map: selectedDistrict || "HK",
         aspectScale: 1,
         layoutCenter: ["50%", "50%"],
         layoutSize: "100%",
         animationDurationUpdate: 1000,
         universalTransition: true,
-        // silent: true,
         selectedMode: false,
-        data: data,
+        silent: selectedDistrict ? true : false,
+        data: selectedDistrict
+          ? data.filter((item) => item.name === selectedDistrict)
+          : data,
+        label: {
+          show: showLabel && !!selectedDistrict,
+          formatter: function (params: any) {
+            return `Population: ${params.value?.toLocaleString() || ''}`;
+          },
+          fontSize: 24,
+          fontWeight: "bold",
+          color: "#000000ff",
+          blendMode: "difference",
+          left: 0,
+        },
         itemStyle: {
           borderColor: "#bababaff",
           borderWidth: 1,
@@ -141,7 +158,7 @@ export default function MapPage() {
       left: "center",
       top: "2%",
       textStyle: {
-        fontSize: 20,
+        fontSize: 24,
         fontWeight: "bold",
         color: "#333",
       },
@@ -211,7 +228,7 @@ export default function MapPage() {
     series: {
       type: "bar",
       id: "population",
-        
+
       data: data.map(function (item) {
         return item.value;
       }),
@@ -227,8 +244,31 @@ export default function MapPage() {
 
     echarts.registerMap("HK", hkJson as any);
 
+    // Register individual districts for zooming
+    const geoJSON = mapDisplayMode === "simple" ? hkJsonSimple : hkJson;
+    (geoJSON as any).features.forEach((feature: any) => {
+      const districtName = feature.properties.name;
+      echarts.registerMap(districtName, {
+        type: "FeatureCollection",
+        features: [feature],
+      } as any);
+    });
+
     // Initial render
     myChart.setOption(mapOption);
+
+    // Add click event listener
+    myChart.on("click", (params: any) => {
+      if (params.componentType === "series" && params.seriesType === "map") {
+        if (selectedDistrict === params.name) {
+          // If clicking the same district, zoom out
+          setSelectedDistrict(null);
+        } else {
+          // Zoom into the clicked district
+          setSelectedDistrict(params.name);
+        }
+      }
+    });
 
     const handleResize = () => {
       myChart.resize();
@@ -247,7 +287,20 @@ export default function MapPage() {
       const option = viewMode === "map" ? mapOption : barOption;
       chartInstance.current.setOption(option, true);
     }
-  }, [viewMode, mapOption, barOption]);
+  }, [viewMode, mapOption, barOption, selectedDistrict, showLabel]);
+
+  useEffect(() => {
+    if (selectedDistrict) {
+      setShowLabel(false);
+      const timer = setTimeout(() => {
+        setShowLabel(true);
+      }, 1000);
+      
+      return () => clearTimeout(timer);
+    } else {
+      setShowLabel(false);
+    }
+  }, [selectedDistrict]);
 
   useEffect(() => {
     if (chartInstance.current) {
@@ -257,12 +310,22 @@ export default function MapPage() {
         echarts.registerMap("HK", hkJson as any);
       }
 
+          // Register individual districts for zooming
+    const geoJSON = mapDisplayMode === "simple" ? hkJsonSimple : hkJson;
+    (geoJSON as any).features.forEach((feature: any) => {
+      const districtName = feature.properties.name;
+      echarts.registerMap(districtName, {
+        type: "FeatureCollection",
+        features: [feature],
+      } as any);
+    });
+
       chartInstance.current.setOption(mapOption, true);
     }
   }, [mapDisplayMode]);
 
   return (
-    <div className="w-full h-screen relative overflow-hidden">
+    <div className="w-full h-screen p-16 relative overflow-hidden">
       <div className="absolute top-4 left-4 z-10 flex gap-2">
         <button
           onClick={() => setViewMode("map")}
@@ -306,6 +369,17 @@ export default function MapPage() {
             }`}
           >
             Detailed
+          </button>
+        </div>
+      )}
+
+      {viewMode === "map" && selectedDistrict && (
+        <div className="absolute top-36 left-4 z-10">
+          <button
+            onClick={() => setSelectedDistrict(null)}
+            className="px-4 py-2 rounded bg-red-900 text-white shadow hover:bg-red-700"
+          >
+            View Full Map
           </button>
         </div>
       )}
