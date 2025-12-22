@@ -124,7 +124,7 @@ export default function MapPage() {
       {
         id: "population",
         type: "map",
-        // roam: true,
+        roam: true,
         map: selectedDistrict || "HK",
         aspectScale: 1,
         layoutCenter: ["50%", "50%"],
@@ -273,7 +273,10 @@ export default function MapPage() {
   useEffect(() => {
     if (!chartRef.current) return;
 
-    const myChart = echarts.init(chartRef.current);
+    const myChart = echarts.init(chartRef.current, null, {
+      devicePixelRatio: window.devicePixelRatio || 2, // Use device pixel ratio or 2x for better quality
+      renderer: 'canvas', // Use canvas for better performance with high resolution
+    });
     chartInstance.current = myChart;
 
     echarts.registerMap("HK", hkJson as any);
