@@ -106,17 +106,17 @@ export default function MapPage() {
         itemStyle: {
           borderColor: "#bababaff",
           borderWidth: 1,
-          emphasis: {
-            // For the hover text
-            label: {
-              show: false,
-              color: "#0c0c0cff",
-              fontSize: 16,
-              fontWeight: "bold",
-            },
-            itemStyle: {
-              areaColor: "#0000ffff",
-            },
+        },
+        emphasis: {
+          // For the hover text
+          label: {
+            show: false,
+            color: "#0c0c0cff",
+            fontSize: 16,
+            fontWeight: "bold",
+          },
+          itemStyle: {
+            areaColor: "#f1f1f1ff",
           },
         },
       },
