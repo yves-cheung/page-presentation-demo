@@ -54,6 +54,16 @@ export default function MapPage() {
   });
 
   const mapOption = {
+    title: {
+      text: "Hong Kong District Population",
+      left: "center",
+      top: "2%",
+      textStyle: {
+        fontSize: 20,
+        fontWeight: "bold",
+        color: "#333",
+      },
+    },
     tooltip: {
       trigger: "item",
       formatter: function (params: any) {
@@ -102,6 +112,8 @@ export default function MapPage() {
         layoutSize: "100%",
         animationDurationUpdate: 1000,
         universalTransition: true,
+        // silent: true,
+        selectedMode: false,
         data: data,
         itemStyle: {
           borderColor: "#bababaff",
@@ -124,6 +136,16 @@ export default function MapPage() {
   };
 
   const barOption = {
+    title: {
+      text: "Hong Kong District Population",
+      left: "center",
+      top: "2%",
+      textStyle: {
+        fontSize: 20,
+        fontWeight: "bold",
+        color: "#333",
+      },
+    },
     tooltip: {
       trigger: "axis",
       axisPointer: {
@@ -144,11 +166,27 @@ export default function MapPage() {
     },
     xAxis: {
       type: "value",
+      name: "Population",
+      nameLocation: "middle",
+      nameGap: 30,
+      nameTextStyle: {
+        fontSize: 14,
+        fontWeight: "bold",
+        color: "#333",
+      },
     },
     yAxis: {
       type: "category",
+      name: "District",
+      nameLocation: "middle",
+      nameGap: 100,
+      nameTextStyle: {
+        fontSize: 14,
+        fontWeight: "bold",
+        color: "#333",
+      },
       axisLabel: {
-        rotate: 30,
+        rotate: 0,
       },
       data: data.map(function (item) {
         return item.name;
@@ -173,6 +211,7 @@ export default function MapPage() {
     series: {
       type: "bar",
       id: "population",
+        
       data: data.map(function (item) {
         return item.value;
       }),
