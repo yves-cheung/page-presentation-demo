@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import * as echarts from "echarts";
 import hkJson from "../data/geo_hk.json";
 import hkJsonSimple from "../data/geo_hk_simple.json";
+import { analyseComplexValue } from "framer-motion";
 
 export default function MapPage() {
   const [viewMode, setViewMode] = useState<"map" | "bar">("map");
@@ -12,6 +13,7 @@ export default function MapPage() {
   );
   const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null);
   const [showLabel, setShowLabel] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const chartRef = useRef<HTMLDivElement>(null);
   const chartInstance = useRef<echarts.ECharts | null>(null);
 
@@ -54,6 +56,18 @@ export default function MapPage() {
     return a.value - b.value;
   });
 
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768); // 768px is the 'md' breakpoint
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   const mapOption = {
     title: {
       text: selectedDistrict
@@ -86,15 +100,16 @@ export default function MapPage() {
     },
     visualMap: {
       show: !selectedDistrict,
-      //   orient: "horizontal",
-      right: "5%",
-      bottom: "0%",
-      //   itemWidth: 200,
-      itemHeight: 100,
-      //   align: "bottom",
+      orient: isMobile ? "horizontal" : "vertical",
+      left: isMobile ? "center" : undefined,
+      right: isMobile ? undefined : "5%",
+      bottom: isMobile ? "2%" : undefined,
+      top: isMobile ? undefined : "center",
+      itemWidth: isMobile ? 12 : 20,
+      itemHeight: isMobile ? 80 : 200,
       textStyle: {
         color: "#7a7a7aff",
-        fontSize: 14,
+        fontSize: isMobile ? 10 : 14,
         fontWeight: "bold",
       },
       min: 150000,
@@ -158,7 +173,7 @@ export default function MapPage() {
       left: "center",
       top: "2%",
       textStyle: {
-        fontSize: 24,
+        fontSize: isMobile ? 16 : 20,
         fontWeight: "bold",
         color: "#333",
       },
@@ -170,40 +185,59 @@ export default function MapPage() {
       },
       formatter: function (params: any) {
         const param = params[0];
-        return `Population: ${param.value.toLocaleString()}`;
+        return `${param.name}<br/>Population: ${param.value.toLocaleString()}`;
       },
       backgroundColor: "rgba(50, 50, 50, 0.9)",
       borderColor: "#333",
       borderWidth: 1,
       textStyle: {
         color: "#fff",
-        fontSize: 14,
+        fontSize: isMobile ? 12 : 14,
         fontWeight: "bold",
       },
+    },
+    grid: {
+      left: isMobile ? "20%" : "15%",
+      right: isMobile ? "5%" : "5%",
+      top: isMobile ? "12%" : "15%",
+      bottom: isMobile ? "8%" : "5%",
+      containLabel: true,
     },
     xAxis: {
       type: "value",
-      name: "Population",
+    //   name: isMobile ? "" : "Population",
       nameLocation: "middle",
-      nameGap: 30,
+      nameGap: 25,
       nameTextStyle: {
-        fontSize: 14,
-        fontWeight: "bold",
-        color: "#333",
-      },
-    },
-    yAxis: {
-      type: "category",
-      name: "District",
-      nameLocation: "middle",
-      nameGap: 100,
-      nameTextStyle: {
-        fontSize: 14,
+        fontSize: 12,
         fontWeight: "bold",
         color: "#333",
       },
       axisLabel: {
-        rotate: 0,
+        rotate: isMobile ? 45 : 0,
+        fontSize: isMobile ? 9 : 11,
+        interval: isMobile ? 'auto' : 0,
+        formatter: function(value: number) {
+          if (isMobile) {
+            return (value / 1000).toFixed(0) + 'k';
+          }
+          return value.toLocaleString();
+        }
+      },
+    },
+    yAxis: {
+      type: "category",
+    //   name: isMobile ? "" : "District",
+      nameLocation: "middle",
+      nameGap: isMobile ? 50 : 60,
+      nameTextStyle: {
+        fontSize: 12,
+        fontWeight: "bold",
+        color: "#333",
+      },
+      axisLabel: {
+        rotate: 45,
+        fontSize: isMobile ? 9 : 11,
       },
       data: data.map(function (item) {
         return item.name;
@@ -287,7 +321,7 @@ export default function MapPage() {
       const option = viewMode === "map" ? mapOption : barOption;
       chartInstance.current.setOption(option, true);
     }
-  }, [viewMode, mapOption, barOption, selectedDistrict, showLabel]);
+  }, [viewMode, mapOption, barOption, selectedDistrict, showLabel, isMobile]);
 
   useEffect(() => {
     if (selectedDistrict) {
@@ -325,66 +359,69 @@ export default function MapPage() {
   }, [mapDisplayMode]);
 
   return (
-    <div className="w-full h-screen p-16 relative overflow-hidden">
-      <div className="absolute top-4 left-4 z-10 flex gap-2">
-        <button
-          onClick={() => setViewMode("map")}
-          className={`px-4 py-2 rounded ${
-            viewMode === "map"
-              ? "bg-gray-600 text-white"
-              : "bg-white text-gray-800 shadow"
-          }`}
-        >
-          Map
-        </button>
-        <button
-          onClick={() => setViewMode("bar")}
-          className={`px-4 py-2 rounded ${
-            viewMode === "bar"
-              ? "bg-gray-600 text-white"
-              : "bg-white text-gray-800 shadow"
-          }`}
-        >
-          Bar
-        </button>
+    <div className="w-full h-screen p-2 sm:p-4 md:p-8 lg:p-16 flex flex-col overflow-hidden">
+      {/* Control Buttons */}
+      <div className="flex flex-col gap-2 mb-2 sm:mb-4">
+        <div className="flex flex-wrap gap-1 sm:gap-2">
+          <button
+            onClick={() => setViewMode("map")}
+            className={`px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base rounded ${
+              viewMode === "map"
+                ? "bg-gray-600 text-white"
+                : "bg-white text-gray-800 shadow"
+            }`}
+          >
+            Map
+          </button>
+          <button
+            onClick={() => setViewMode("bar")}
+            className={`px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base rounded ${
+              viewMode === "bar"
+                ? "bg-gray-600 text-white"
+                : "bg-white text-gray-800 shadow"
+            }`}
+          >
+            Bar
+          </button>
+        </div>
+        
+        {viewMode === "map" && (
+          <div className="flex flex-wrap gap-1 sm:gap-2">
+            <button
+              onClick={() => setMapDisplayMode("simple")}
+              className={`px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base rounded ${
+                mapDisplayMode === "simple"
+                  ? "bg-green-600 text-white"
+                  : "bg-white text-gray-800 shadow"
+              }`}
+            >
+              Simple
+            </button>
+            <button
+              onClick={() => setMapDisplayMode("detailed")}
+              className={`px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base rounded ${
+                mapDisplayMode === "detailed"
+                  ? "bg-green-600 text-white"
+                  : "bg-white text-gray-800 shadow"
+              }`}
+            >
+              Detailed
+            </button>
+            
+            {selectedDistrict && (
+              <button
+                onClick={() => setSelectedDistrict(null)}
+                className="px-2 py-1 sm:px-4 sm:py-2 text-sm sm:text-base rounded bg-red-900 text-white shadow hover:bg-red-700"
+              >
+                View Full Map
+              </button>
+            )}
+          </div>
+        )}
       </div>
-      {viewMode === "map" && (
-        <div className="absolute top-20 left-4 z-10 flex gap-2">
-          <button
-            onClick={() => setMapDisplayMode("simple")}
-            className={`px-4 py-2 rounded ${
-              mapDisplayMode === "simple"
-                ? "bg-green-600 text-white"
-                : "bg-white text-gray-800 shadow"
-            }`}
-          >
-            Simple
-          </button>
-          <button
-            onClick={() => setMapDisplayMode("detailed")}
-            className={`px-4 py-2 rounded ${
-              mapDisplayMode === "detailed"
-                ? "bg-green-600 text-white"
-                : "bg-white text-gray-800 shadow"
-            }`}
-          >
-            Detailed
-          </button>
-        </div>
-      )}
 
-      {viewMode === "map" && selectedDistrict && (
-        <div className="absolute top-36 left-4 z-10">
-          <button
-            onClick={() => setSelectedDistrict(null)}
-            className="px-4 py-2 rounded bg-red-900 text-white shadow hover:bg-red-700"
-          >
-            View Full Map
-          </button>
-        </div>
-      )}
-
-      <div ref={chartRef} className="w-full h-full" />
+      {/* Chart Container */}
+      <div ref={chartRef} className="flex-1 w-full" />
     </div>
   );
 }
