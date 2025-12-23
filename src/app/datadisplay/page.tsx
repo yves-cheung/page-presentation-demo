@@ -8,6 +8,7 @@ import TreeMap from "./TreeMap";
 import GeoMap from "./GeoMap";
 import { ParentSize } from "@visx/responsive";
 import WordCloud from "../wordcloud/WordCloud";
+import { Divider } from "./Divider";
 
 export default function DataDisplayPage() {
   return (
@@ -16,9 +17,13 @@ export default function DataDisplayPage() {
         <GeoMap />
       </div>
 
+      <Divider />
+
       <div className="w-full flex justify-center">
         <TreeMap />
       </div>
+
+      <Divider />
 
       <div className="w-full h-screen max-w-7xl max-h-[500px] sm:max-h-[800px]">
         <ParentSize>
