@@ -25,7 +25,7 @@ export default function DataDisplayPage() {
 
       <Divider />
 
-      <div className="w-full h-screen max-w-7xl max-h-[500px] sm:max-h-[800px]">
+      <div className="w-full h-screen max-w-7xl max-h-[500px] sm:max-h-[800px] cursor-auto">
         <ParentSize>
           {({ width, height }) => <WordCloud width={width} height={height} />}
         </ParentSize>
