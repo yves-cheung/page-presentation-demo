@@ -17,7 +17,11 @@
     "next": "^16.0.10",
     "react": "19.2.1",
     "react-dom": "19.2.1",
-    "swiper": "^12.0.3"
+    "swiper": "^12.0.3",
+    "@visx/responsive": "latest",
+    "@visx/scale": "latest",
+    "@visx/text": "latest",
+    "@visx/wordcloud": "latest"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
