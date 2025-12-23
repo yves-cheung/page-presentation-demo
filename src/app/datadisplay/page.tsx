@@ -6,6 +6,8 @@ import hkJson from "../data/geo_hk.json";
 import hkJsonSimple from "../data/geo_hk_simple.json";
 import TreeMap from "./TreeMap";
 import GeoMap from "./GeoMap";
+import { ParentSize } from "@visx/responsive";
+import WordCloud from "../wordcloud/WordCloud";
 
 export default function DataDisplayPage() {
   return (
@@ -16,6 +18,12 @@ export default function DataDisplayPage() {
 
       <div className="w-full flex justify-center">
         <TreeMap />
+      </div>
+
+      <div className="w-full h-screen max-w-7xl max-h-[500px] sm:max-h-[800px]">
+        <ParentSize>
+          {({ width, height }) => <WordCloud width={width} height={height} />}
+        </ParentSize>
       </div>
     </div>
   );
