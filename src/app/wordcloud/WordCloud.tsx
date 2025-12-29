@@ -131,6 +131,26 @@ export default function WordCloud({ width, height, showControls = true }: WordCl
                   transform={`translate(${w.x}, ${w.y}) rotate(${w.rotate})`}
                   fontSize={w.size}
                   fontFamily={w.font}
+                  style={{ cursor: 'pointer', transition: 'font-size 120ms, fill 120ms' }}
+                  onMouseEnter={(e: React.MouseEvent<SVGTextElement>) => {
+                  const t = e.currentTarget;
+                  t.dataset.origFont = t.getAttribute('font-size') || '';
+                  t.dataset.origFill = t.getAttribute('fill') || '';
+                  // enlarge and change color on hover
+                  t.setAttribute('font-size', String(Number(w.size) * 1.15));
+                  t.setAttribute('fill', '#f97316');
+                  }}
+                  onMouseLeave={(e: React.MouseEvent<SVGTextElement>) => {
+                  const t = e.currentTarget;
+                  const origFont = t.dataset.origFont;
+                  const origFill = t.dataset.origFill;
+                  if (origFont) t.setAttribute('font-size', origFont);
+                  if (origFill) t.setAttribute('fill', origFill);
+                  }}
+                  onClick={() =>
+                  // open a search for the clicked word in a new tab; change URL as needed
+                  window.open(`https://www.art-mate.net/?a=search&search=${encodeURIComponent(w.text!)}`, '_blank')
+                  }
                 >
                   {w.text}
                 </Text>
