@@ -113,9 +113,11 @@ export default function TreeMap() {
     // (topLevel is computed at component scope)
 
     const option = {
+      // keep title visible but position it as an overlay so the treemap can start at the very top
       title: {
         text: "表演藝術節目類型分佈",
         left: "center",
+        top: 10, // small offset so title doesn't sit exactly on the container edge
         textStyle: {
           fontSize: 24,
           fontWeight: "bold",
@@ -135,6 +137,11 @@ export default function TreeMap() {
         {
           type: "treemap",
           data: topLevel,
+          // allow treemap to use the full container height (start at the very top)
+          top: 60,
+          bottom: 0,
+          left: 0,
+          right: 0,
           // clicking a parent node will zoom into it and show its children
           nodeClick: "zoomToNode",
           roam: false,
@@ -158,9 +165,10 @@ export default function TreeMap() {
             borderColor: "#ffffffff",
             borderWidth: 0,
           },
+          // remove extra reserved upper label space so tiles fill the top
           upperLabel: {
             show: true,
-            height: 30,
+            height: 0,
           },
         },
       ],
