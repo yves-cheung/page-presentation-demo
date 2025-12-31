@@ -11,16 +11,37 @@ export function ImageLooper({ images, intervalMs = 100 }: ImageLooperProps) {
   const [zoomed, setZoomed] = useState(false);
   const [hoverPaused, setHoverPaused] = useState(false);
   const intervalRef = useRef<number | null>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [inView, setInView] = useState(false);
 
   const paused = manualPaused || hoverPaused;
 
-  // Preload images
+  // Preload images only when the card enters view
   useEffect(() => {
+    if (!inView) return;
     images.forEach((src) => {
       const img = new Image();
       img.src = src;
     });
-  }, [images]);
+  }, [images, inView]);
+
+  // IntersectionObserver to detect when the card is in the window view
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          setInView(entry.isIntersecting);
+        });
+      },
+      { threshold: 0.25 }
+    );
+
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   useEffect(() => {
     function onKeyDown(e: KeyboardEvent) {
@@ -57,7 +78,7 @@ export function ImageLooper({ images, intervalMs = 100 }: ImageLooperProps) {
     };
   }, [manualPaused]);
 
-  // Looping effect
+  // Looping effect: only run when the card is in view and not paused
   useEffect(() => {
     // clear any existing timer
     if (intervalRef.current) {
@@ -65,7 +86,9 @@ export function ImageLooper({ images, intervalMs = 100 }: ImageLooperProps) {
       intervalRef.current = null;
     }
 
-    if (!paused) {
+    const shouldPlay = inView && !manualPaused && !hoverPaused && images.length > 0;
+
+    if (shouldPlay) {
       intervalRef.current = window.setInterval(() => {
         setIndex((i) => (i + 1) % images.length);
       }, intervalMs);
@@ -77,7 +100,7 @@ export function ImageLooper({ images, intervalMs = 100 }: ImageLooperProps) {
         intervalRef.current = null;
       }
     };
-  }, [paused, images.length, intervalMs]);
+  }, [inView, manualPaused, hoverPaused, images.length, intervalMs]);
 
   // handlers
   function handleMouseEnter() {
@@ -111,6 +134,7 @@ export function ImageLooper({ images, intervalMs = 100 }: ImageLooperProps) {
     >
       <div
         role="button"
+        ref={containerRef}
         onClick={handleClick}
         onKeyDown={(e) => {
           if (e.key === " " || e.key === "Enter") {
@@ -124,7 +148,9 @@ export function ImageLooper({ images, intervalMs = 100 }: ImageLooperProps) {
         }
         aria-pressed={manualPaused}
         title={
-          zoomed
+          !inView
+            ? "Not in view - looping paused"
+            : zoomed
             ? "Zoomed (click back button to resume)"
             : manualPaused
             ? "Paused (click to resume)"
@@ -134,10 +160,11 @@ export function ImageLooper({ images, intervalMs = 100 }: ImageLooperProps) {
         }
       >
         <img
-          src={images[index]}
+          src={inView ? images[index] : undefined}
           alt={`Poster ${index + 1}`}
           className="w-full h-full object-cover transition-opacity duration-150"
           draggable={false}
+          loading="lazy"
         />
 
         {/* small counter / status */}
