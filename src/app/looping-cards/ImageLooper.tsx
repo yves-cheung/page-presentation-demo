@@ -13,20 +13,28 @@ export function ImageLooper({ images, intervalMs = 100 }: ImageLooperProps) {
   const intervalRef = useRef<number | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
   const [inView, setInView] = useState(false);
+  const preloadedRef = useRef<Set<number>>(new Set());
 
   const paused = manualPaused || hoverPaused;
 
-  // Preload current and next 3 images when the card is in view
+  // Preload current and next 3 images when the card is in view.
+  // Each image is preloaded only once; preloaded indices stored in `preloadedRef`.
   useEffect(() => {
-    if (!inView || images.length === 0) return;
+    if (!inView || images.length === 0 || index >= images.length) return;
 
-    const nextCount = 10; // preload current + next 10 images
+    const nextCount = 3; // preload current + next 3 images
+    const preloaded = preloadedRef.current;
+
     for (let offset = 0; offset <= nextCount; offset++) {
       const idx = (index + offset) % images.length;
+      if (preloaded.has(idx)) continue; // already preloaded
+
       const src = images[idx];
       if (src) {
         const img = new Image();
         img.src = src;
+        // mark as preloaded immediately to avoid duplicate requests
+        preloaded.add(idx);
       }
     }
     // use images.length instead of images to keep dependency array size stable
