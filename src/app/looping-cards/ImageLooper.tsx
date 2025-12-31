@@ -5,10 +5,7 @@ interface ImageLooperProps {
   intervalMs?: number;
 }
 
-export function ImageLooper({
-  images,
-  intervalMs = 10,
-}: ImageLooperProps) {
+export function ImageLooper({ images, intervalMs = 100 }: ImageLooperProps) {
   const [index, setIndex] = useState(0);
   const [manualPaused, setManualPaused] = useState(false);
   const [zoomed, setZoomed] = useState(false);
@@ -24,6 +21,41 @@ export function ImageLooper({
       img.src = src;
     });
   }, [images]);
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      // detect spacebar (handle older browsers and code)
+      if (e.code !== "Space" && e.key !== " ") return;
+
+      // ignore when typing in inputs or contenteditable
+      const target = e.target as HTMLElement | null;
+      if (
+        target &&
+        (target.tagName === "INPUT" ||
+          target.tagName === "TEXTAREA" ||
+          target.isContentEditable)
+      ) {
+        return;
+      }
+
+      e.preventDefault();
+
+      if (manualPaused) {
+        // currently paused -> resume (also remove zoom if any)
+        setManualPaused(false);
+        setZoomed(false);
+      } else {
+        // currently running -> pause (do not force zoom)
+        setManualPaused(true);
+        setZoomed(true);
+      }
+    }
+
+    window.addEventListener("keydown", onKeyDown);
+    return () => {
+      window.removeEventListener("keydown", onKeyDown);
+    };
+  }, [manualPaused]);
 
   // Looping effect
   useEffect(() => {
@@ -73,7 +105,6 @@ export function ImageLooper({
 
   return (
     <div
-      tabIndex={0}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className="flex flex-col items-center gap-3"
