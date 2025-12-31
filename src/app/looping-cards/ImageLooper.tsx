@@ -16,14 +16,21 @@ export function ImageLooper({ images, intervalMs = 100 }: ImageLooperProps) {
 
   const paused = manualPaused || hoverPaused;
 
-  // Preload images only when the card enters view
+  // Preload current and next 3 images when the card is in view
   useEffect(() => {
-    if (!inView) return;
-    images.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
-  }, [images, inView]);
+    if (!inView || images.length === 0) return;
+
+    const nextCount = 10; // preload current + next 10 images
+    for (let offset = 0; offset <= nextCount; offset++) {
+      const idx = (index + offset) % images.length;
+      const src = images[idx];
+      if (src) {
+        const img = new Image();
+        img.src = src;
+      }
+    }
+    // use images.length instead of images to keep dependency array size stable
+  }, [inView, index, images.length]);
 
   // IntersectionObserver to detect when the card is in the window view
   useEffect(() => {
