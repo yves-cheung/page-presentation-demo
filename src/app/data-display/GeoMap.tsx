@@ -10,6 +10,7 @@ export default function DataDisplayPage() {
   const [mapDisplayMode, setMapDisplayMode] = useState<"simple" | "detailed">(
     "detailed"
   );
+  const [regionFilter, setRegionFilter] = useState<string[]>([]); // empty = All
   const [selectedDistrict, setSelectedDistrict] = useState<string | null>(null);
   const [showLabel, setShowLabel] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
@@ -54,6 +55,49 @@ export default function DataDisplayPage() {
   data.sort(function (a, b) {
     return a.value - b.value;
   });
+
+  // Mapping of districts to regions for filtering in bar view
+  const regionToDistricts: Record<string, string[]> = {
+    "HK Island": ["Central and Western", "Eastern", "Southern", "Wan Chai"],
+    Kowloon: [
+      "Kowloon City",
+      "Kwun Tong",
+      "Sham Shui Po",
+      "Wong Tai Sin",
+      "Yau Tsim Mong",
+    ],
+    "New Territories": [
+      "Islands",
+      "Kwai Tsing",
+      "North",
+      "Sai Kung",
+      "Sha Tin",
+      "Tai Po",
+      "Tsuen Wan",
+      "Tuen Mun",
+      "Yuen Long",
+    ],
+  };
+
+  // Compute filtered data for the bar view based on selected regions
+  const filteredData = (() => {
+    // empty selection means All
+    if (!regionFilter || regionFilter.length === 0) return data;
+
+    // Build a set of allowed districts from selected regions
+    const allowed = new Set<string>();
+    regionFilter.forEach((r) => {
+      const list = regionToDistricts[r];
+      if (list && Array.isArray(list)) {
+        list.forEach((d) => allowed.add(d));
+      }
+    });
+
+    // If nothing matched (defensive), fall back to all
+    if (allowed.size === 0) return data;
+
+    return data.filter((d) => allowed.has(d.name));
+  })();
 
   // Check if mobile on mount and resize
   useEffect(() => {
@@ -168,7 +212,10 @@ export default function DataDisplayPage() {
 
   const barOption = {
     title: {
-      text: "Hong Kong District Population",
+      text:
+        regionFilter && regionFilter.length > 0
+          ? `${regionFilter.join(", ")} — Hong Kong District Population`
+          : "Hong Kong District Population",
       left: "center",
       top: "2%",
       textStyle: {
@@ -197,7 +244,7 @@ export default function DataDisplayPage() {
     },
     grid: {
       left: isMobile ? "20%" : "15%",
-      right: isMobile ? "5%" : "5%",
+      right: isMobile ? "5%" : "15%",
       top: isMobile ? "12%" : "15%",
       bottom: isMobile ? "8%" : "5%",
       containLabel: true,
@@ -238,7 +285,7 @@ export default function DataDisplayPage() {
         rotate: 45,
         fontSize: isMobile ? 9 : 11,
       },
-      data: data.map(function (item) {
+      data: filteredData.map(function (item) {
         return item.name;
       }),
     },
@@ -262,7 +309,7 @@ export default function DataDisplayPage() {
       type: "bar",
       id: "population",
 
-      data: data.map(function (item) {
+      data: filteredData.map(function (item) {
         return item.value;
       }),
       universalTransition: true,
@@ -420,13 +467,43 @@ export default function DataDisplayPage() {
             )}
           </div>
         )}
-      </div>
+</div>
 
-      {/* Chart Container */}
-      <div
-        ref={chartRef}
-        className="w-full h-100vh sm:h-[100vh] lg:h-[100vh] min-h-[320px]"
-      />
+      {/* Chart Container (with floating filter panel for bar view) */}
+      <div className="relative">
+        <div
+          ref={chartRef}
+          className="w-full h-100vh sm:h-[100vh] lg:h-[100vh] min-h-[320px]"
+        />
+
+        {viewMode === "bar" && (
+          <div className="absolute top-4 right-0 z-20 bg-white/90 backdrop-blur rounded shadow p-2 flex flex-col gap-1">
+            <div className="text-xs text-gray-700 font-semibold">Region</div>
+                {(["All", "HK Island", "Kowloon", "New Territories"] as const).map((r) => (
+                  <label key={r} className="flex items-center text-sm">
+                    <input
+                      type="checkbox"
+                      name={`region-${r}`}
+                      checked={
+                        r === "All" ? regionFilter.length === 0 : regionFilter.includes(r)
+                      }
+                      onChange={() => {
+                        if (r === "All") {
+                          setRegionFilter([]);
+                        } else {
+                          setRegionFilter((prev) =>
+                            prev.includes(r) ? prev.filter((x) => x !== r) : [...prev, r]
+                          );
+                        }
+                      }}
+                      className="mr-2"
+                    />
+                    <span>{r}</span>
+                  </label>
+                ))}
+          </div>
+        )}
+      </div>
 </>
    
   );
